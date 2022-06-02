@@ -6,7 +6,7 @@ class SessionController {
   async store(req, res) {
     const { email, password } = req.body
 
-    const user = await User.findOne({ 
+    const user = await User.findOne({
       where: {
         email
       }
