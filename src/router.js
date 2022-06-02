@@ -8,4 +8,7 @@ routes.post('/users', UserController.store)
 
 routes.post('/sessions', SessionController.store)
 
+routes.put('/update', UserController.update)
+
+
 export default routes
