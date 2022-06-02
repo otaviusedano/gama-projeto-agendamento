@@ -20,6 +20,9 @@ class User extends Model {
     password_hash: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    provider: {
+      type: Sequelize.BOOLEAN,
     }},
     {
       sequelize,
