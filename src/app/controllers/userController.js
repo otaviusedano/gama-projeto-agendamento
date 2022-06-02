@@ -2,11 +2,11 @@ import User from "../models/user"
 
 class UserController {
   async store(req, res) {
-    const userExists = await User.findOne({
-      where: {email: req.body.email}
+    const userExists = await User.findAll({
+      where: {email: req.body.email, id: req.body.id}
     })
     if (userExists) {
-      return res.status(400).json({
+      return res.status(401).json({
         error: "Usuário já cadastrado"
       })
     }
