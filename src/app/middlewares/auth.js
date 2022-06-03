@@ -1,4 +1,9 @@
-export default (req, res, next) => {
+import jwt from 'jsonwebtoken'
+import { promisify } from 'util'
+
+import authConfig from '../../config/auth'
+
+const authMiddlewares = async (req, res, next) => {
   const authHeaders = req.headers.authorization
 
   if (!authHeaders) {
@@ -8,7 +13,23 @@ export default (req, res, next) => {
   }
 
   const [ _, token ] = authHeaders.split(' ')
-  console.log('Token', token)
 
-  next()
+  const jwtVerify = promisify(jwt.verify);
+  jwtVerify(token, authConfig.secret)
+  .then((stats) => {
+    res.status(200).json({
+      msg: stats.id
+    })
+     req.userId = stats.id
+    next()
+  })
+  .catch((error) => {
+    if (error) {
+      res.status(401).json({
+        error: "Token inválido"
+      })
+    }
+  });
 }
+
+export default authMiddlewares
