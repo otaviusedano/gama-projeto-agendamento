@@ -16,20 +16,17 @@ const authMiddlewares = async (req, res, next) => {
 
   const jwtVerify = promisify(jwt.verify);
   jwtVerify(token, authConfig.secret)
-  .then((stats) => {
-    res.status(200).json({
-      msg: stats.id
+    .then((stats) => {
+      req.userId = stats.id
+      next()
     })
-     req.userId = stats.id
-    next()
-  })
-  .catch((error) => {
-    if (error) {
-      res.status(401).json({
-        error: "Token inválido"
-      })
-    }
-  });
+    .catch((error) => {
+      if (error) {
+        res.status(401).json({
+          error: "Token inválido"
+        })
+      }
+    })
 }
 
 export default authMiddlewares
