@@ -1,7 +1,21 @@
+import * as Yup from 'yup'
 import User from "../models/user"
 
 class UserController {
   async store(req, res) {
+
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+      password: Yup.string().required().min(6)
+    })
+
+    if (!schema.isValidSync(req.body)) {
+      return res.status(400).json({
+        error: "Schema inválido"
+      })
+    }
+
     const idExist = await User.findOne({
       where: {id: req.body.id}
     })
@@ -17,6 +31,23 @@ class UserController {
   }
 
   async update(req, res) {
+
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string().email(),
+      oldPassword: Yup.string().min(6),    
+      password: Yup.string().min(6).when(
+        'oldPassword', (oldPassword, field) => 
+          oldPassword ? field.required() : field
+      )
+    })
+
+    if (!schema.isValidSync(req.body)) {
+      return res.status(400).json({
+        error: "Schema inválido"
+      })
+    }
+
     const { email, oldPassword } = req.body
     const user = await User.findByPk(req.userId)
 
@@ -25,7 +56,7 @@ class UserController {
         where: {email}
       })
 
-      if ((await emailExist)) {
+      if (emailExist) {
         res.status(401).json({
           error: "Usuário já cadastrado"
         })
