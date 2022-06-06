@@ -19,10 +19,8 @@ class UserController {
     const emailExist = await User.findOne({
       where: {email: req.body.email}
     })
-    const idExist = await User.findOne({
-      where: {id: req.body.id}
-    })
-    if (idExist || emailExist) {
+
+    if (emailExist) {
       return res.status(401).json({
         error: "Usuário já cadastrado"
       })
