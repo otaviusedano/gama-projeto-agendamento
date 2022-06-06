@@ -8,8 +8,6 @@ class FileController {
       name, path
     })
 
-   console.log(req.file) // undefined
-
     return res.json({
       msg: file
     })
