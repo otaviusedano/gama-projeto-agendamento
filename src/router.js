@@ -6,6 +6,7 @@ import SessionController from "./app/controllers/sessionController"
 import collaboratorController from "./app/controllers/collaboratorController"
 import FileController from './app/controllers/fileController'
 import authMiddlewares from "./app/middlewares/auth"
+import appointmentController from "./app/controllers/appointmentController"
 
 const routes = new Router()
 const upload = multer(multerConfig)
@@ -17,6 +18,8 @@ routes.post('/sessions', SessionController.store)
 routes.use(authMiddlewares)
 
 routes.put('/users', UserController.update)
+
+routes.post('/appointments', appointmentController.store)
 
 routes.get('/collaborators', collaboratorController.index)
 
