@@ -1,6 +1,8 @@
 import express from 'express'
 import routes from './router'
 import './database'
+import path, {resolve} from 'path'
+
 
 class app {
   constructor() {
@@ -11,6 +13,7 @@ class app {
 
   middlewaves(){
     this.server.use(express.json())
+    this.server.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads' )))
   }
 
   routes(){
