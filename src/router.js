@@ -8,6 +8,7 @@ import FileController from './app/controllers/fileController'
 import authMiddlewares from "./app/middlewares/auth"
 import appointmentController from "./app/controllers/appointmentController"
 import scheduleController from "./app/controllers/scheduleController"
+import notificationsController from "./app/controllers/notificationsController"
 
 const routes = new Router()
 const upload = multer(multerConfig)
@@ -27,6 +28,8 @@ routes.get('/appointments', appointmentController.index)
 routes.get('/collaborators', collaboratorController.index)
 
 routes.get('/schedule', scheduleController.index)
+
+routes.get('/notifications', notificationsController.index)
 
 routes.post('/files', upload.single('file'), FileController.store)
 
