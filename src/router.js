@@ -21,6 +21,8 @@ routes.put('/users', UserController.update)
 
 routes.post('/appointments', appointmentController.store)
 
+routes.get('/appointments', appointmentController.index)
+
 routes.get('/collaborators', collaboratorController.index)
 
 routes.post('/files', upload.single('file'), FileController.store)
