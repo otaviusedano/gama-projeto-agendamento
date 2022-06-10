@@ -31,6 +31,8 @@ routes.get('/schedule', scheduleController.index)
 
 routes.get('/notifications', notificationsController.index)
 
+routes.put('/notifications/:id', notificationsController.update)
+
 routes.post('/files', upload.single('file'), FileController.store)
 
 export default routes
